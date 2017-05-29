@@ -5,19 +5,25 @@ def dist(x,y):
     return np.sqrt(np.sum((x-y)**2))
 
 x_train = np.array([[1,1],[2,2.5],[3,1.2],[5.5,6.3],[6,9],[7,6]])
-x_test = np.array([[3,4],[8,7],[5,6],[0,3]])
+x_test = np.array([[3,4],[8,7],[5,6],[0,3],[1,8],[5,5]])
 y_test = []
 y_train = ['red','red','red','blue','blue','blue']
 plt.figure()
 plt.scatter(x_train[:,0], x_train[:,1], s=170,color=y_train[:])
-num = len(x_train)
+
 num1 = len(x_test)
-distance = np.zeros(num)
+
 for j in range(num1):
+    num = len(x_train)
+    distance = np.zeros(num)
     for i in range(num):
         distance[i] = dist(x_train[i], x_test[j])
     min_index = np.argmin(distance)
     y_test.append(y_train[min_index])
+    #next 3 lines will add test cases back to training dataset
+    temp = np.array([x_test[j]])
+    x_train = np.append(x_train, temp,axis=0)
+    y_train.append(y_test[j])
 plt.scatter(x_test[:,0], x_test[:,1], s=170,color=y_test[:])
 plt.show()
 
